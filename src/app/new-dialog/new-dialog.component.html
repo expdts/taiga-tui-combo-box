@@ -1,0 +1,49 @@
+<div>
+
+  <div>
+    <form [formGroup]="dataForm">
+
+      <div class="w-30">
+        <tui-combo-box
+          *tuiLet="request(search) | async as filtered"
+          formControlName="user"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="value"
+          [(search)]="search"
+          [stringify]="stringify"
+        >
+          Find the best employees
+          <input tuiTextfield placeholder="Type a name" />
+          <ng-template #value let-item>
+            <span>{{ item?.firstName }}&nbsp;{{ item?.lastName }}</span>
+          </ng-template>
+          <ng-template tuiDataList>
+            <tui-data-list *ngIf="filtered; else loading">
+              <button *ngFor="let item of filtered" tuiOption [value]="item">
+                <span>{{ item?.firstName }}&nbsp;{{ item?.lastName }}</span>
+              </button>
+            </tui-data-list>
+            <ng-template #loading>
+              <tui-loader class="tui-space_vertical-4"></tui-loader>
+            </ng-template>
+          </ng-template>
+        </tui-combo-box>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="t-mt-2">
+    <button
+      tuiButton
+      class="tui-form__button"
+      size="m"
+      type="submit"
+      appearance="primary"
+      (click)="closeModal(null)"
+    >
+      close
+    </button>
+  </div>
+
+</div>
